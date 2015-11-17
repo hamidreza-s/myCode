@@ -2,24 +2,27 @@ CC=gcc
 
 LIBRARY_NAME=nanomsg
 LIBRARY_PATH=/usr/local/lib
+INCLUDE_PATH=/usr/local/include
 
 CFLAGS+= -Wall 
-LDFLAGS+= -L$(LIBRARY_PATH) -l$(LIBRARY_NAME)
+LDFLAGS+= -I$(INCLUDE_PATH) -L$(LIBRARY_PATH) -l$(LIBRARY_NAME)
 
 BIN_DIR=bin
 OBJS=src/*.o
 
-.PHONY: pipeline_test reqrep_test bus_test
+.PHONY: pipeline_test reqrep_test bus_test pair_test
 
-all: pipeline reqrep bus
-	mkdir -p $(BIN_DIR)
-	mv $^ $(BIN_DIR)
+all: prebuild pipeline reqrep bus pair
+	@echo done!
+
+prebuild:
+	mkdir -p bin
 
 clean:
 	rm -rf $(BIN_DIR) $(OBJS)
 
-pipeline: src/pipeline.o
-	$(CC) -o $@ $< $(CFLAGS) $(LDFLAGS)
+pipeline:
+	$(CC) src/pipeline.c -o  bin/pipeline $(CFLAGS) $(LDFLAGS)
 
 pipeline_test:
 	@./$(BIN_DIR)/pipeline node0 "ipc:///tmp/pipeline.ipc" \
@@ -32,8 +35,8 @@ pipeline_test:
 	@kill `cat /tmp/pipeline.pid`
 
 
-reqrep: src/reqrep.o
-	$(CC) -o $@ $< $(CFLAGS) $(LDFLAGS)
+reqrep:
+	$(CC) src/reqrep.c -o bin/reqrep $(CFLAGS) $(LDFLAGS)
 
 
 reqrep_test:
@@ -43,8 +46,8 @@ reqrep_test:
 	@./$(BIN_DIR)/reqrep node1 "ipc:///tmp/reqrep.ipc" &
 	@kill `cat /tmp/reqrep.pid`
 
-bus: src/bus.o
-	$(CC) -o $@ $< $(CFLAGS) $(LDFLAGS)
+bus:
+	$(CC) src/bus.c -o bin/bus $(CFLAGS) $(LDFLAGS)
 
 bus_test:
 	@./$(BIN_DIR)/bus node0 \
@@ -70,3 +73,9 @@ bus_test:
 	@kill `cat /tmp/bus1.pid`
 	@kill `cat /tmp/bus2.pid`
 	@kill `cat /tmp/bus3.pid`
+
+pair:
+	$(CC) src/pair.c -o bin/pair $(CFLAGS) $(LDFLAGS)
+
+
+reqrep_test:
