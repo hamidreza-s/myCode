@@ -21,6 +21,9 @@ int main(int argc, char *argv[])
   char recv_str[MAX_RECV_STR + 1];     /* buffer fro received string */
   int recv_str_len;                    /* length of received string */
 
+  struct sockaddr_in remote_addr;
+  socklen_t remote_len = sizeof(remote_addr);
+  
   if(argc != 2) {
     fprintf(stderr, "Usage: %s <broadcast port>\n", argv[0]);
     exit(1);
@@ -47,11 +50,15 @@ int main(int argc, char *argv[])
   for(;;)
     {
       /* receive a single datagram */
-      if((recv_str_len = recvfrom(sock, recv_str, MAX_RECV_STR, 0, NULL, 0)) < 0)
+      if((recv_str_len = recvfrom(sock, recv_str, MAX_RECV_STR, 0,
+				  (struct sockaddr *) &remote_addr, &remote_len)) < 0)
 	die("recvfrom");
 
       recv_str[recv_str_len] = '\0';
-      printf("Received: %s\n", recv_str);
+      printf("Remote: %s:%d\nReceived: %s\n",
+	     inet_ntoa(remote_addr.sin_addr),
+	     ntohs(remote_addr.sin_port),
+	     recv_str);
     }
 
   close(sock);
