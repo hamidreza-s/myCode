@@ -1,4 +1,4 @@
-all: udp_server udp_client udp_broadcast_receiver udp_broadcast_sender
+all: udp_server udp_client udp_broadcast_receiver udp_broadcast_sender network_interfaces
 	@mkdir -p ./bin
 	@echo "done!"
 
@@ -19,3 +19,6 @@ udp_broadcast_receiver:
 
 udp_broadcast_sender:
 	gcc udp_broadcast_sender.c -o bin/udp_broadcast_sender
+
+network_interfaces:
+	gcc network_interfaces.c -o bin/network_interfaces
