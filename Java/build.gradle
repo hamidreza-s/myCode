@@ -1,0 +1,17 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = "App"
+
+repositories {
+    jcenter()
+}
+
+test {
+
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile 'junit:junit:4.12'
+}
