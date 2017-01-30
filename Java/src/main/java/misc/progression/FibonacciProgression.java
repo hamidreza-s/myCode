@@ -1,4 +1,4 @@
-public class FibonacciProgression extends Progression {
+public class FibonacciProgression extends AbstractProgression {
     protected long prev;
     public FibonacciProgression() { this(0, 1); }
     public FibonacciProgression(long first, long second) {

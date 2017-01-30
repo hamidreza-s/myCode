@@ -1,15 +1,13 @@
-public class Progression {
+public abstract class AbstractProgression {
     protected long current;
-    public Progression() { this(0); }
-    public Progression(long start) { current = start; }
+    public AbstractProgression() { this(0); }
+    public AbstractProgression(long start) { current = start; }
     public long nextValue() {
 	long answer = current;
 	advance();
 	return answer;
     }
-    protected void advance() {
-	current++;
-    }
+    protected abstract void advance();
     public void printProgression(int n) {
 	System.out.print(nextValue());
 	for(int j = 1; j < n; j++)

@@ -1,4 +1,4 @@
-public class ArithmeticProgression extends Progression {
+public class ArithmeticProgression extends AbstractProgression {
     protected long increment;
     public ArithmeticProgression() { this(1, 0); }
     public ArithmeticProgression(long stepsize) { this(stepsize, 0); }
