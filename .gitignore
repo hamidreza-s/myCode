@@ -1,3 +1,5 @@
 *.o
 .emacs.desktop.lock
 .emacs.desktop
+.DS_Store
+*.idea
