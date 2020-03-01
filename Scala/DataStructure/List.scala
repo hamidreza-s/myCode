@@ -26,7 +26,7 @@ abstract sealed class List[+A] {
    * Space: O(n)
    */
   def apply(n: Int): A =
-    if (isEmpty) throw new Exception("Index out of range")
+    if (isEmpty) throw new NoSuchElementException("Index out of range")
     else if (n == 0) head
     else tail(n - 1)
 
@@ -53,8 +53,8 @@ abstract sealed class List[+A] {
 }
 
 case object Nil extends List[Nothing] {
-  def head: Nothing = throw new Exception("Empty list")
-  def tail: Nothing = throw new Exception("Empty list")
+  def head: Nothing = throw new NoSuchElementException("Empty list")
+  def tail: Nothing = throw new NoSuchElementException("Empty list")
   def isEmpty: Boolean = true
 }
 
