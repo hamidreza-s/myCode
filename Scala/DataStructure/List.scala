@@ -68,7 +68,7 @@ case object List {
 
   @tailrec
   private def create[A](xs: Seq[A], acc: List[A]): List[A] = xs match {
-    case head +: tail => create(tail, acc.prepend(head))
+    case hd +: tl => create(tl, acc.prepend(hd))
     case Seq() => acc
   }
 }
