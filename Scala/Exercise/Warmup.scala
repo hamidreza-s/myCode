@@ -78,3 +78,26 @@ object RepeatedString {
   }
 
 }
+
+
+
+object MaxDiff {
+  case class TreeNode(value: Int, left: Option[TreeNode], right: Option[TreeNode])
+
+  def maxDiff(root: TreeNode): Int = maxDiff(Some(root), root.value, root.value)
+  def maxDiff(root: Option[TreeNode], min: Int, max: Int): Int = {
+
+    root match {
+      case None => max - min
+      case Some(current) =>
+
+        val newMin = current.value.min(min)
+        val newMax = current.value.max(max)
+
+        val left = maxDiff(current.left, newMin, newMax)
+        val right = maxDiff(current.right, newMin, newMax)
+
+        left.max(right)
+    }
+  }
+}
